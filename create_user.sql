@@ -7,13 +7,13 @@ declare
   i_START_DATE        date;
   c_USER              VARCHAR2(30):='AIZVYAGIN';
   c_LANG                 VARCHAR2(30):='RU';
-   c_RESP                 VARCHAR2(30):='Системный администратор';
+   c_RESP                 VARCHAR2(30):='РЎРёСЃС‚РµРјРЅС‹Р№ Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ';
   i_res               boolean;
   i_employee_id       varchar2(200);
 Begin
   /*TEXT WORK IN SCHEMA APPS!!!*/
   begin
-    select person_id into i_employee_id from per_all_people_f t where full_name = 'Татаркина Дина Юрьевна';
+    select person_id into i_employee_id from per_all_people_f t where full_name = 'РўР°С‚Р°СЂРєРёРЅР° Р”РёРЅР° Р®СЂСЊРµРІРЅР°';
   exception when no_data_found then
     i_employee_id := null;
   end;    
@@ -26,15 +26,15 @@ Begin
     select USER_ID into i_USER_ID from APPS.FND_USER FU where FU.USER_NAME = c_USER;
     i_res := apps.FND_PROFILE.SAVE('DIAGNOSTICS', 'Y', 'USER', i_USER_ID);
     if i_res = true then
-      dbms_output.put_line('Профиль <Utilities:Diagnostics> был изменен для пользователя, USER_ID: '||to_char(i_USER_ID));
+      dbms_output.put_line('РџСЂРѕС„РёР»СЊ <Utilities:Diagnostics> Р±С‹Р» РёР·РјРµРЅРµРЅ РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ, USER_ID: '||to_char(i_USER_ID));
     else
-      dbms_output.put_line('Warnings!!! Профиль <Utilities:Diagnostics> НЕ был изменен для пользователя, USER_ID: '||to_char(i_USER_ID));
+      dbms_output.put_line('Warnings!!! РџСЂРѕС„РёР»СЊ <Utilities:Diagnostics> РќР• Р±С‹Р» РёР·РјРµРЅРµРЅ РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ, USER_ID: '||to_char(i_USER_ID));
     end if;
     i_res := apps.FND_PROFILE.SAVE('FND_HIDE_DIAGNOSTICS', 'N', 'USER', i_USER_ID);
     if i_res = true then
-      dbms_output.put_line('Профиль <Hide Diagnostics menu entry> был изменен для пользователя, USER_ID: '||to_char(i_USER_ID));
+      dbms_output.put_line('РџСЂРѕС„РёР»СЊ <Hide Diagnostics menu entry> Р±С‹Р» РёР·РјРµРЅРµРЅ РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ, USER_ID: '||to_char(i_USER_ID));
     else
-      dbms_output.put_line('Warnings!!! Профиль <Hide Diagnostics menu entry> НЕ был изменен для пользователя, USER_ID: '||to_char(i_USER_ID));
+      dbms_output.put_line('Warnings!!! РџСЂРѕС„РёР»СЊ <Hide Diagnostics menu entry> РќР• Р±С‹Р» РёР·РјРµРЅРµРЅ РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ, USER_ID: '||to_char(i_USER_ID));
     end if;
   exception when others then
     dbms_output.put_line('Error <!>: '|| substr(sqlerrm,1,200));
@@ -65,62 +65,62 @@ Begin
     end_date => NULL,
     description => i_DESCRIPTION);
     
- -- добавим профили
-  dbms_output.put_line('Суперпользователь закупок');
+ -- РґРѕР±Р°РІРёРј РїСЂРѕС„РёР»Рё
+  dbms_output.put_line('РЎСѓРїРµСЂРїРѕР»СЊР·РѕРІР°С‚РµР»СЊ Р·Р°РєСѓРїРѕРє');
   fnd_user_pkg.addresp(c_USER, 'PO', 'PURCHASING_SUPER_USER', 'STANDARD', 'Add by script', sysdate, null);
   
-  dbms_output.put_line('Суперпользователь Управления заказами');
+  dbms_output.put_line('РЎСѓРїРµСЂРїРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЈРїСЂР°РІР»РµРЅРёСЏ Р·Р°РєР°Р·Р°РјРё');
   fnd_user_pkg.addresp(c_USER, 'ONT', 'ORDER_MGMT_SUPER_USER', 'STANDARD', 'Add by script', sysdate, null);
  
-  dbms_output.put_line('Запасы');
+  dbms_output.put_line('Р—Р°РїР°СЃС‹');
   fnd_user_pkg.addresp(c_USER, 'INV', 'INVENTORY', 'STANDARD', 'Add by script', sysdate, null);
  
-  /*dbms_output.put_line('Управление затратами - SLA');
+  /*dbms_output.put_line('РЈРїСЂР°РІР»РµРЅРёРµ Р·Р°С‚СЂР°С‚Р°РјРё - SLA');
   fnd_user_pkg.addresp(c_USER, 'CST', 'COST_MANAGEMENT', 'STANDARD', 'Add by script', sysdate, null);*/
  
-  dbms_output.put_line('Суперпользователь внедрения Проектов');
+  dbms_output.put_line('РЎСѓРїРµСЂРїРѕР»СЊР·РѕРІР°С‚РµР»СЊ РІРЅРµРґСЂРµРЅРёСЏ РџСЂРѕРµРєС‚РѕРІ');
   fnd_user_pkg.addresp(c_USER, 'PA', 'PA_IMPLEMENTATION_SU_GUI', 'STANDARD', 'Add by script', sysdate, null);
  
-  /*dbms_output.put_line('Суперпользователь Казначейства');
+  /*dbms_output.put_line('РЎСѓРїРµСЂРїРѕР»СЊР·РѕРІР°С‚РµР»СЊ РљР°Р·РЅР°С‡РµР№СЃС‚РІР°');
   fnd_user_pkg.addresp(c_USER, 'XTR', 'T', 'STANDARD', 'Add by script', sysdate, null);*/
  
-  /*dbms_output.put_line('Глобальный руководитель SLA/ЗРП');
+  /*dbms_output.put_line('Р“Р»РѕР±Р°Р»СЊРЅС‹Р№ СЂСѓРєРѕРІРѕРґРёС‚РµР»СЊ SLA/Р—Р Рџ');
   fnd_user_pkg.addresp(c_USER, 'PAY', 'GLB_SLA_PAYROLL_MANAGER', 'STANDARD', 'Add by script', sysdate, null);*/
  
-  /*dbms_output.put_line('Глобальный суперпользователь-руководитель СУПЕР');
+  /*dbms_output.put_line('Р“Р»РѕР±Р°Р»СЊРЅС‹Р№ СЃСѓРїРµСЂРїРѕР»СЊР·РѕРІР°С‚РµР»СЊ-СЂСѓРєРѕРІРѕРґРёС‚РµР»СЊ РЎРЈРџР•Р ');
   fnd_user_pkg.addresp(c_USER, 'PER', 'GLB_SHRMS_MANAGER', 'STANDARD', 'Add by script', sysdate, null);*/
  
-  /*dbms_output.put_line('Закупки для SLA');
+  /*dbms_output.put_line('Р—Р°РєСѓРїРєРё РґР»СЏ SLA');
   fnd_user_pkg.addresp(c_USER, 'PO', 'SLA_PO_DEV', 'STANDARD', 'Add by script', sysdate, null);*/
  
   /*dbms_output.put_line('Desktop Integrator');
   fnd_user_pkg.addresp(c_USER, 'BNE', 'DESKTOP_INTEGRATOR', 'STANDARD', 'Add by script', sysdate, null);*/
  
-  dbms_output.put_line('Разработчик приложений');
+  dbms_output.put_line('Р Р°Р·СЂР°Р±РѕС‚С‡РёРє РїСЂРёР»РѕР¶РµРЅРёР№');
   fnd_user_pkg.addresp(c_USER, 'FND', 'APPLICATION_DEVELOPER', 'STANDARD', 'Add by script', sysdate, null);
  
-  /*dbms_output.put_line('Администратор функций');
+  /*dbms_output.put_line('РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ С„СѓРЅРєС†РёР№');
   fnd_user_pkg.addresp(c_USER, 'FND', 'FND_FUNC_ADMIN', 'STANDARD', 'Add by script', sysdate, null);*/
  
-  /*dbms_output.put_line('Диспетчер кредиторов');
+  /*dbms_output.put_line('Р”РёСЃРїРµС‚С‡РµСЂ РєСЂРµРґРёС‚РѕСЂРѕРІ');
   fnd_user_pkg.addresp(c_USER, 'SQLAP', 'PAYABLES_MANAGER', 'STANDARD', 'Add by script', sysdate, null);*/
  
-  dbms_output.put_line('Администратор издателя XML');
+  dbms_output.put_line('РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ РёР·РґР°С‚РµР»СЏ XML');
   fnd_user_pkg.addresp(c_USER, 'XDO', 'XDO_ADMINISTRATION', 'STANDARD', 'Add by script', sysdate, null);
  
-  /*dbms_output.put_line('Системный администратор');
+  /*dbms_output.put_line('РЎРёСЃС‚РµРјРЅС‹Р№ Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ');
   fnd_user_pkg.addresp(c_USER, 'SYSADMIN', 'SYSTEM_ADMINISTRATOR', 'STANDARD', 'Add by script', sysdate, null);*/
  
-  /*dbms_output.put_line('Диагностика приложения');
+  /*dbms_output.put_line('Р”РёР°РіРЅРѕСЃС‚РёРєР° РїСЂРёР»РѕР¶РµРЅРёСЏ');
   fnd_user_pkg.addresp(c_USER, 'FND', 'APPLICATION_DIAGNOSTICS', 'STANDARD', 'Add by script', sysdate, null);*/
  
-  /*dbms_output.put_line('Диспетчер основных средств');
+  /*dbms_output.put_line('Р”РёСЃРїРµС‚С‡РµСЂ РѕСЃРЅРѕРІРЅС‹С… СЃСЂРµРґСЃС‚РІ');
   fnd_user_pkg.addresp(c_USER, 'OFA', 'FIXED_ASSETS_MANAGER', 'STANDARD', 'Add by script', sysdate, null);*/
  
-  /*dbms_output.put_line('Диспетчер Дебиторов');
+  /*dbms_output.put_line('Р”РёСЃРїРµС‚С‡РµСЂ Р”РµР±РёС‚РѕСЂРѕРІ');
   fnd_user_pkg.addresp(c_USER, 'AR', 'RECEIVABLES_MANAGER', 'STANDARD', 'Add by script', sysdate, null);*/
  
-  /*dbms_output.put_line('Суперпользователь Главной книги');
+  /*dbms_output.put_line('РЎСѓРїРµСЂРїРѕР»СЊР·РѕРІР°С‚РµР»СЊ Р“Р»Р°РІРЅРѕР№ РєРЅРёРіРё');
   fnd_user_pkg.addresp(c_USER, 'SQLGL', 'GENERAL_LEDGER_SUPER_USER', 'STANDARD', 'Add by script', sysdate, null);*/   
   
 exception when others then
