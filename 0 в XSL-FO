@@ -1,0 +1,1 @@
+<fo:bidi-override direction="ltr" unicode-bidi="bidi-override"><?(ORDERED_ITEM)[1]?></fo:bidi-override>
